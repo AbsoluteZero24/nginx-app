@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'jdk11'
-        maven 'maven3'
-    }
-
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
     }
@@ -14,24 +9,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/AbsoluteZero24/nginx-app.git'
-            }
-        }
-
-        stage('compile code') {
-            steps {
-                sh "mvn clean compile"
-            }
-        }
-
-        stage('code test') {
-            steps {
-                sh "mvn test"
-            }
-        }
-        
-        stage('Build') {
-            steps {
-                sh "mvn clean install"
             }
         }
 
