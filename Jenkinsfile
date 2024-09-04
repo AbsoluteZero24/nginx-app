@@ -34,7 +34,17 @@ pipeline {
                 sh "mvn clean install"
             }
         }
-        
+
+        stage('sonar analsys') {
+            steps {
+                withSonarQubeEnv('sonar') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=nginx-app \
+                    -Dsonar.java.binaries=. \
+                    -Dsonar.projectKey=nginx-app '''
+                }
+            }
+        }
+
         stage('Build Image') {
             steps {
                 script {
